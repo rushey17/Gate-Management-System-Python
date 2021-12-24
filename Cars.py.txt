@@ -1,0 +1,50 @@
+from datetime import datetime
+def get_entry_exit_timings(inputlist):
+ entry_dict = {}
+ exit_dict = {}
+ for i in inputlist:
+ if "ENTRY" in i:
+ entry_dict[i[0]] = i[2]
+ else:
+ exit_dict[i[0]] = i[2]
+ entry_exit_timings = []
+ entry_dict_keys = entry_dict.keys()
+ for j in entry_dict_keys:
+ if j in exit_dict:
+ 
+entry_exit_timings.append(entry_dict.get(j))
+ 
+entry_exit_timings.append(exit_dict.get(j))
+ if len(entry_exit_timings) != 0:
+ find_avg_max_min(entry_exit_timings)
+def find_avg_max_min(entry_exit_timings):
+ sum = 0
+ diff_days_list = []
+ diff_hour_list = []
+ diff_min_list = []
+ for i in range(0, len(entry_exit_timings), 2):
+ entry = entry_exit_timings[i]
+ exit = entry_exit_timings[i + 1]
+ entry_date = entry.split(' ')[0]
+ exit_date = exit.split(' ')[0]
+ entry_timings = entry.split(' ')[1]
+ exit_timings = exit.split(' ')[1]
+ entry_hours = entry_timings.split(':')[0]
+ entry_minutes = entry_timings.split(':')[1]
+ exit_hours = exit_timings.split(':')[0]
+ exit_minutes = exit_timings.split(':')[1]
+ date_format = "%d-%m-%Y"
+ a = datetime.strptime(entry_date, date_format)
+ b = datetime.strptime(exit_date, date_format)
+ delta = b - a
+ diff_days_list.append(delta.days * 1440)
+ diff_hour = int(exit_hours) - int(entry_hours)
+ diff_hour_list.append(diff_hour * 60)
+ diff_min = int(exit_minutes) -
+int(entry_minutes)
+ diff_min_list.append(diff_min)
+ max_min = []
+ for j in range(0, len(diff_hour_list)):
+ 
+max_min.append(diff_days_list[j]+diff_hour_list[j] + 
+diff_min_list[j])
